@@ -5,7 +5,6 @@ import MapView from './components/MapView';
 import { Property } from './types';
 
 const App = () => {
-  // Initial mock data
   const mockProperties: Property[] = [
     {
       id: 1,
@@ -39,17 +38,16 @@ const App = () => {
     },
   ];
 
-  // Set initial state to mock data
   const [properties, setProperties] = useState<Property[]>(mockProperties);
 
-  // Fetch property data from the backend
-  useEffect(() => {
+/**
+ *useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/properties'); // Adjust the URL to your backend endpoint
+        const response = await fetch('http://localhost:5000/api/properties');
         if (response.ok) {
           const data: Property[] = await response.json();
-          setProperties(data); // Replace mock data with backend data
+          setProperties(data);
         } else {
           console.error('Failed to fetch data from the backend');
         }
@@ -60,6 +58,8 @@ const App = () => {
 
     fetchData();
   }, []);
+
+ */
 
   return (
     <div className="min-h-screen flex">
