@@ -1,35 +1,31 @@
-// src/components/MapView.tsx
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { GoogleMap, MarkerF, useJsApiLoader, Autocomplete } from '@react-google-maps/api';
-import { Property } from '../types';
+import { PreForeclosureProperty } from '../types/PreForeclosureProperty';
 
 interface MapViewProps {
-  properties: Property[];
+  properties: PreForeclosureProperty[];
 }
 
 const MapView: React.FC<MapViewProps> = ({ properties }) => {
-  const [mapCenter, setMapCenter] = useState(() => {
-    if (properties.length > 0) {
-      return { lat: properties[0].lat, lng: properties[0].lng };
-    }
-    return { lat: 39.8283, lng: -98.5795 }; // Default center of the US
-  });
-
+  const [mapCenter, setMapCenter] = useState({ lat: 39.8283, lng: -98.5795 });
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-
-  const orangePinIcon = 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png';
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyCGNSrR8ftIbDwJTuaUD20CQassCeZIHDY', // Replace with your API key
-    libraries: ['places'], // Add 'places' to load the Places API for Autocomplete
+    googleMapsApiKey: 'AIzaSyCGNSrR8ftIbDwJTuaUD20CQassCeZIHDY', // Replace with your actual Google Maps API key
+    libraries: ['places'],
   });
+
+  useEffect(() => {
+    if (properties.length > 0) {
+      setMapCenter({ lat: properties[0].location.latitude, lng: properties[0].location.longitude });
+    }
+  }, [properties]);
 
   const onPlaceChanged = () => {
     if (autocompleteRef.current) {
       const place = autocompleteRef.current.getPlace();
       if (place.geometry && place.geometry.location) {
-        // Update map center to the selected place
         setMapCenter({
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng(),
@@ -44,20 +40,14 @@ const MapView: React.FC<MapViewProps> = ({ properties }) => {
     <>
       <div className="search-bar-container" style={{ position: 'absolute', top: 10, right: 10, zIndex: 1000 }}>
         <Autocomplete
+        
           onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
           onPlaceChanged={onPlaceChanged}
         >
           <input
             type="text"
             placeholder="Search for a location"
-            style={{
-              width: '300px',
-              height: '40px',
-              padding: '10px',
-              boxSizing: 'border-box',
-              borderRadius: '4px',
-              border: '1px solid #ccc',
-            }}
+            style={{ width: '300px', height: '40px', padding: '10px', boxSizing: 'border-box', borderRadius: '4px', border: '1px solid #ccc' }}
           />
         </Autocomplete>
       </div>
@@ -69,9 +59,9 @@ const MapView: React.FC<MapViewProps> = ({ properties }) => {
       >
         {properties.map((property) => (
           <MarkerF
-            key={property.id}
-            position={{ lat: property.lat, lng: property.lng }}
-            icon={orangePinIcon}
+            key={property.propertyIdentification.ATTOMID}
+            position={{ lat: property.location.latitude, lng: property.location.longitude }}
+            icon='http://maps.google.com/mapfiles/ms/icons/orange-dot.png'
             clickable={true}
           />
         ))}
