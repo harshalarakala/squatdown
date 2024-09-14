@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import MapView from './components/MapView';
+import SlidingView from './components/SlidingView';
 import { Property } from './types';
 
 const App = () => {
@@ -72,6 +73,7 @@ const App = () => {
       <div className="flex-1">
         <MapView properties={properties} />
       </div>
+      <SlidingView />
     </div>
   );
 }
