@@ -1,23 +1,24 @@
 .sliding-container {
-  position: absolute;
-  bottom: 0; /* Position it at the bottom */
+  position: fixed;
+  bottom: 0;
   left: 0;
-  height: 300px; /* Adjust the height based on your needs */
-  width: 100%; /* Full width of the screen */
+  height: 50%;
+  width: 100%;
   background-color: #f1f1f1;
   transition: transform 0.3s ease-in-out;
-  transform: translateY(100%); /* Start off-screen at the bottom */
+  transform: translateY(100%);
+  z-index: 1000;
 }
 
 .sliding-container.open {
-  transform: translateY(0); /* Slide into view */
+  transform: translateY(0);
 }
 
 .arrow {
   position: absolute;
-  top: -30px; /* Position arrow above the sliding container */
+  top: -30px;
   left: 50%;
-  transform: translateX(-50%); /* Center the arrow horizontally */
+  transform: translateX(-50%);
   width: 30px;
   height: 30px;
   background-color: #ffa500;
@@ -25,14 +26,33 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  z-index: 1001;
 }
 
 .content {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .sliding-content {
-  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   background-color: #ffffff;
   border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-container {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+
+iframe {
+  flex: 1;
+  height: 100%;
 }
