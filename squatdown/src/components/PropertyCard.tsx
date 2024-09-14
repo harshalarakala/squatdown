@@ -1,4 +1,3 @@
-// src/components/PropertyCard.tsx
 import React from 'react';
 import { Property } from '../types';
 
@@ -8,7 +7,7 @@ interface PropertyCardProps {
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
   return (
-    <div className="mb-4 p-4 shadow-lg rounded-lg bg-gray-100">
+    <div className="mb-4 p-4 shadow-lg rounded-lg bg-gray-100 m-8">
       <p className="text-lg font-semibold">{property.address}</p>
       <p className="text-sm text-gray-600">Phone: {property.phone}</p>
       <p className="text-sm text-gray-600">Loan Amount: ${property.loanAmount}</p>
