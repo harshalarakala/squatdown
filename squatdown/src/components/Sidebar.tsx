@@ -10,13 +10,12 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ properties }) => {
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4 text-orange-500">Available Squats</h1>
+      <h1 className="text-2xl font-bold mb-4 text-orange-500 text-center">Available Squats</h1>
       <div>
         {properties.map((property) => (
           <PropertyCard key={property.id} property={property} />
         ))}
       </div>
-      <div className="mt-4 text-center text-gray-600">More Cards Below...</div>
     </div>
   );
 };
